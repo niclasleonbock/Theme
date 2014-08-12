@@ -1,0 +1,21 @@
+{
+    "name": "konversation/theme",
+    "description": "",
+    "authors": [
+        {
+            "name": "niclasleonbock",
+            "email": "niclasleonbock@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "4.2.*",
+        "illuminate/framework": "4.2.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Konversation\\Theme": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
