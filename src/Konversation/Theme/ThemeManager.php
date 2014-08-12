@@ -1,6 +1,7 @@
 <?php
 namespace Konversation\Theme;
 
+use Exception;
 use InvalidArgumentException;
 
 use Illuminate\Foundation\Application;
@@ -132,7 +133,7 @@ class ThemeManager extends Collection
      */
     public function register(ThemeProviderInterface $theme)
     {
-        $this->put($theme->getIdentifier(), new Theme($theme));
+        $this->put($theme->getIdentifier(), $theme);
     }
 
     /**
@@ -232,11 +233,17 @@ class ThemeManager extends Collection
     public function setTheme($theme)
     {
         if ($theme instanceof ThemeProviderInterface) {
+            $this->put($theme->getIdentifier(), $theme);
+
             $theme = $theme->getIdentifier();
         }
 
         if (!is_string($theme)) {
-            throw new InvalidArgumentException('Theme must be a string (name) or an instance of ThemeProviderInterface.');
+            throw new InvalidArgumentException('Theme must be a string (identifier) or an instance of ThemeProviderInterface.');
+        }
+
+        if (!$this->has($theme)) {
+            throw new Exception('Theme "' . $theme . '" does not exist.');
         }
 
         $path = $this->getViewPath($theme);
@@ -264,10 +271,15 @@ class ThemeManager extends Collection
     /**
      * Get the currently active theme.
      *
-     * @return  string
+     * @param   bool    $provider
+     * @return  string|\Konversation\Theme\ThemeProviderInterface
      */
-    public function getTheme()
+    public function getTheme($provider = false)
     {
+        if ($provider) {
+            return $this->get($this->theme, $this->theme);
+        }
+
         return $this->theme;
     }
 }
