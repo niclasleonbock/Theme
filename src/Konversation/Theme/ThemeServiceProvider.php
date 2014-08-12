@@ -19,6 +19,11 @@ class ThemeServiceProvider extends ServiceProvider
 	 */
 	protected $defer = false;
 
+    public function boot()
+    {
+		$this->package('konversation/theme');
+    }
+
 	/**
 	 * Register the service provider.
 	 *
@@ -26,14 +31,10 @@ class ThemeServiceProvider extends ServiceProvider
 	 */
 	public function register()
 	{
-		$this->package('konversation/theme');
-
-        $app = $this->app;
-
         $this->app->bindShared('view.finder', function ($app) {
             return new ViewFinder(
-                $app['files'],
-                $app['config']['view.paths']
+                $app->files,
+                $app->config->get('view.paths')
             );
         });
 
@@ -77,7 +78,13 @@ class ThemeServiceProvider extends ServiceProvider
 	 */
 	public function provides()
 	{
-		return [ 'view.finder', 'theme' ];
+		return [
+            'view.finder',
+            'theme',
+            'theme.command.assets.publish',
+            'theme.command.assets.unpublish',
+            'theme.command.make',
+        ];
 	}
 }
 
