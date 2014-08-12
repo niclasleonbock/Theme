@@ -1,6 +1,6 @@
 {
     "name": "konversation/theme",
-    "description": "",
+    "description": "simple theme support for laravel",
     "authors": [
         {
             "name": "niclasleonbock",
