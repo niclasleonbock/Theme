@@ -83,7 +83,7 @@ class ThemeServiceProvider extends ServiceProvider
      */
     public function provides()
     {
-		return [
+        return [
             'view.finder',
             'theme',
             'theme.command.assets.publish',
