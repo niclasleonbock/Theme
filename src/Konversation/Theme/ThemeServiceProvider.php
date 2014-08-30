@@ -12,25 +12,25 @@ use Konversation\Theme\Command\MakeCommand;
 
 class ThemeServiceProvider extends ServiceProvider
 {
-	/**
-	 * Indicates if loading of the provider is deferred.
-	 *
-	 * @var bool
-	 */
-	protected $defer = false;
+    /**
+     * Indicates if loading of the provider is deferred.
+     *
+     * @var bool
+     */
+    protected $defer = false;
 
     public function boot()
     {
-		$this->package('konversation/theme');
+        $this->package('konversation/theme');
     }
 
-	/**
-	 * Register the service provider.
-	 *
-	 * @return  void
-	 */
-	public function register()
-	{
+    /**
+     * Register the service provider.
+     *
+     * @return  void
+     */
+    public function register()
+    {
         $this->app->bindShared('view.finder', function ($app) {
             return new ViewFinder(
                 $app->files,
@@ -48,8 +48,13 @@ class ThemeServiceProvider extends ServiceProvider
         });
 
         $this->registerCommands();
-	}
+    }
 
+    /**
+     * Register the commands.
+     *
+     * @return  void
+     */
     protected function registerCommands()
     {
         $this->app->bindShared('theme.command.assets.publish', function() {
@@ -71,13 +76,13 @@ class ThemeServiceProvider extends ServiceProvider
         ]);
     }
 
-	/**
-	 * Get the services provided by the provider.
-	 *
-	 * @return  array
-	 */
-	public function provides()
-	{
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return  array
+     */
+    public function provides()
+    {
 		return [
             'view.finder',
             'theme',
@@ -85,6 +90,5 @@ class ThemeServiceProvider extends ServiceProvider
             'theme.command.assets.unpublish',
             'theme.command.make',
         ];
-	}
+    }
 }
-
